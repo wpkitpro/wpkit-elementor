@@ -27,7 +27,7 @@ $wpkit_elementor_placeholder = ! empty( wp_kit_elementor_get_settings( 'wpkit_el
 >
 	<div class="search-form__container">
 		<label class="screen-reader-text" for="<?php echo esc_attr( $wpkit_elementor_unique_id ) ?>"><?php _e( 'Search&hellip;', 'wp-kit-elementor' ); // phpcs:ignore: WordPress.Security.EscapeOutput.UnsafePrintingFunction -- core trusts translations ?></label>
-		<input type="search" id="<?php esc_attr( $wpkit_elementor_unique_id ); ?>" class="search-field" value="<?php echo get_search_query(); ?>" placeholder="<?php echo $wpkit_elementor_placeholder; // phpcs:ignore: WordPress.Security.EscapeOutput.UnsafePrintingFunction -- core trusts translations ?>" aria-label="<?php echo esc_attr__('Search&hellip', 'wp-kit-elementor'); ?>" name="s">
+		<input type="search" id="<?php echo esc_attr( $wpkit_elementor_unique_id ); ?>" class="search-field" value="<?php echo get_search_query(); ?>" placeholder="<?php echo $wpkit_elementor_placeholder; // phpcs:ignore: WordPress.Security.EscapeOutput.UnsafePrintingFunction -- core trusts translations ?>" aria-label="<?php echo esc_attr__('Search&hellip', 'wp-kit-elementor'); ?>" name="s">
 		<button type="submit" class="search-submit">
 			<span class="font-icon-svg-container"><i class="fa-solid fa-magnifying-glass"></i></span>
 			<span class="search-submit__text"><?php esc_html_e( 'Search', 'wp-kit-elementor' ); ?></span>

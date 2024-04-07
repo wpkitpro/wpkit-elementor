@@ -34,13 +34,57 @@
 	&--skin-classic {
 	}
 
-	&--skin-minimal {
-	}
-
 	&--skin-full_screen {
+
 	}
 }
 
+
+// Search Form Skin Minimal.
+.site-header.header-search-form--skin-minimal {
+
+	.search-form {
+
+		&__container {
+			display: flex;
+			min-width: 340px;
+			border-radius: 22px;
+			border: 2px solid #bdbdbd;
+		}
+
+		.search-field {
+			border: none;
+			border-top-left-radius: 22px;
+			border-bottom-left-radius: 22px;
+		}
+
+		.search-submit {
+			width: 44px;
+			height: 44px;
+			color: currentColor;
+			padding: 0;
+			border: 0;
+			border-radius: 0;
+
+			&__text {
+				@include screen-render-text;
+			}
+
+			&:hover {
+				color: currentColor;
+				opacity: .72;
+				background-color: transparent;
+			}
+
+			&:focus {
+				outline: 0;
+			}
+		}
+
+	}
+}
+
+// Search Form Full Screen.
 .search-overlay {
 	padding-top: 5.625rem; /* 90/16 */
 	position: fixed;

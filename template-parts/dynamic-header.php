@@ -18,10 +18,12 @@ $primary_nav_menu = wp_nav_menu( [
 	'fallback_cb'    => false,
 	'echo'           => false
 ] );
+
+$header_search_skin    = wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_skin' );
+$header_search_display = ( wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_display' ) || $is_editor );
 ?>
 
-<?php // print_r( wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_display' ) ) ?>
-<?php if ( 'full_screen' === wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_skin' ) && ( wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_display' ) || $is_editor ) ): ?>
+<?php if ( 'full_screen' === $header_search_skin && $header_search_display ): ?>
 	<div class="search-overlay" aria-hidden="true">
 		<div class="container search-form__wrapper">
 			<div class="search-top">
@@ -78,15 +80,19 @@ $primary_nav_menu = wp_nav_menu( [
 		<?php endif; ?>
 
 		<div class="header-section header-section-third">
-			<div
-				class="header-search-toggle-container <?php echo esc_attr( wp_kit_elementor_show_hide( 'wpkit_elementor_header_search_display' ) ); ?>">
-				<div class="search-form__toggle" tabindex="0" aria-expanded="false" role="button">
-					<div class="font-icon-svg-container">
-						<i class="fa-solid fa-magnifying-glass"></i>
+			<?php if ( 'full_screen' === $header_search_skin && $header_search_display ): ?>
+				<div
+					class="header-search-toggle-container <?php echo esc_attr( wp_kit_elementor_show_hide( 'wpkit_elementor_header_search_display' ) ); ?>">
+					<div class="search-form__toggle" tabindex="0" aria-expanded="false" role="button">
+						<div class="font-icon-svg-container">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</div>
+						<span class="screen-reader-text"><?php esc_html_e( 'Search', 'wp-kit-elementor' ); ?></span>
 					</div>
-					<span class="screen-reader-text"><?php esc_html_e( 'Search', 'wp-kit-elementor' ); ?></span>
 				</div>
-			</div>
+			<?php elseif ( 'minimal' === $header_search_skin && $header_search_display ): ?>
+				<?php echo get_search_form(); ?>
+			<?php endif; ?>
 
 			<?php if ( $primary_nav_menu ): ?>
 				<div
