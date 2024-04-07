@@ -4,7 +4,11 @@
 @import "theme/general";
 @import "theme/header-and-footer";
 @import "theme/navigation";
-@import "theme/navigation-toggle";
 @import "theme/posts-and-pages";
 @import "theme/comments";
 @import "theme/layouts";
+
+// Elements
+
+@import "theme/navigation-toggle";
+@import "theme/search-form";

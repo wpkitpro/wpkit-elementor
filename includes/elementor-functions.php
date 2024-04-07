@@ -64,10 +64,10 @@ if ( ! function_exists( 'wp_kit_elementor_get_settings' ) ) {
 
 		$setting = '';
 
-		if ( ! $wp_kit_elementor_settings['kit_settings'] ) {
-			$the_kit = Plugin::$instance->kits_manager->get_active_kit();
+		if ( ! isset( $wp_kit_elementor_settings['kit_settings'] ) ) {
+			$get_kit = Plugin::$instance->kits_manager->get_active_kit();
 
-			$wp_kit_elementor_settings['kit_settings'] = $the_kit->get_settings();
+			$wp_kit_elementor_settings['kit_settings'] = $get_kit->get_settings();
 		}
 
 		if ( isset( $wp_kit_elementor_settings['kit_settings'][ $setting_id ] ) ) {
@@ -88,6 +88,7 @@ if ( ! function_exists( 'wp_kit_elementor_get_settings' ) ) {
 function wp_kit_elementor_show_hide( $setting_id ) {
 	return ( 'yes' === wp_kit_elementor_get_settings( $setting_id ) ? 'show' : 'hide' );
 }
+
 
 /**
  * Dynamic Header Classes
@@ -128,14 +129,38 @@ if ( ! function_exists( 'wp_kit_elementor_get_header_layout_classes' ) ) {
 			$layout_classes[] = 'menu-dropdown-none';
 		}
 
+		$header_search_skin = wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_skin' );
+		if ( 'classic' === $header_search_skin ) {
+			$layout_classes[] = 'header-search-form--skin-classic';
+		} elseif ( 'minimal' === $header_search_skin ) {
+			$layout_classes[] = 'header-search-form--skin-minimal';
+		} elseif ( 'full_screen' === $header_search_skin ) {
+			$layout_classes[] = 'header-search-form--skin-full_screen';
+		}
+
 		$wpkit_elementor_header_menu_layout = wp_kit_elementor_get_settings( 'wpkit_elementor_header_menu_layout' );
 		if ( 'dropdown' === $wpkit_elementor_header_menu_layout ) {
 			$layout_classes[] = 'menu-layout-dropdown';
 		}
 
+		$wpkit_elementor_header_search_layout = wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_display' );
+		if ( 'yes' === $wpkit_elementor_header_search_layout ) {
+			$layout_classes[] = 'header-search-form';
+		}
+
 		return implode( ' ', $layout_classes );
 	}
 }
+
+if ( ! function_exists( 'wp_kit_elementor_header_search_form' ) ) {
+	function wp_kit_elementor_header_search_form() {
+		$header_search_skin = wp_kit_elementor_get_settings( 'wpkit_elementor_header_search_skin' );
+
+		echo get_search_form();
+		// echo 'search form';
+	}
+}
+
 
 add_action( 'wp_enqueue_scripts', function () {
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';

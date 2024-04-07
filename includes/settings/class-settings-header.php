@@ -162,7 +162,7 @@ class Header_Settings extends Tab_Base {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range'      => [
 					'px'  => [
-						'max' => 2000,
+						'max' => 1600,
 					],
 					'em'  => [
 						'max' => 100,
@@ -284,7 +284,7 @@ class Header_Settings extends Tab_Base {
 					'wpkit_elementor_header_logo_type'    => 'logo'
 				],
 				'selectors'   => [
-					'.site-header .site-branding .site-logo ' => 'width: {{SIZE}}{{UNIT}};',
+					'.site-header .site-branding .site-logo' => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -494,7 +494,7 @@ class Header_Settings extends Tab_Base {
 			'wpkit_elementor_header_menu_hamburgers',
 			[
 				'type'               => Controls_Manager::SELECT,
-				'label'              => esc_html__( 'Hamburgers', 'wp-kit-elementor' ),
+				'label'              => esc_html__( 'Type', 'wp-kit-elementor' ),
 				'default'            => 'collapse',
 				'options'            => [
 					'slider'    => esc_html__( 'Slider', 'wp-kit-elementor' ),
@@ -623,6 +623,328 @@ class Header_Settings extends Tab_Base {
 						]
 					],
 				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_skin',
+			[
+				'type'      => Controls_Manager::SELECT,
+				'label'     => esc_html__( 'Skin', 'wp-kit-elementor' ),
+				'default'   => 'classic',
+				'options'   => [
+					'classic'     => esc_html__( 'Classic', 'wp-kit-elementor' ),
+					'minimal'     => esc_html__( 'Minimal', 'wp-kit-elementor' ),
+					'full_screen' => esc_html__( 'Full Screen (Beta)', 'wp-kit-elementor' ),
+				],
+				'condition' => [
+					'wpkit_elementor_header_search_display' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_toggle_size',
+			[
+				'type'      => Controls_Manager::SLIDER,
+				'label'     => esc_html__( 'Toggle Size', 'wp-kit-elementor' ),
+				'default'   => [
+					'size' => 24
+				],
+				'range'     => [
+					'px' => [
+						'max' => 60,
+					],
+				],
+				'condition' => [
+					'wpkit_elementor_header_search_display' => 'yes',
+				],
+				'selectors' => [
+					'.site-header .header-search-toggle-container .search-form__toggle'                          => '--e-wpkit-header-search--toggle-size: {{SIZE}}{{UNIT}};',
+					'.site-header .header-search-toggle-container .search-form__toggle .font-icon-svg-container' => '--e-wpkit-header-search--toggle-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_placeholder',
+			[
+				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Placeholder', 'wp-kit-elementor' ),
+				'label_block' => true,
+				'default'     => esc_attr__( 'Search...', 'wp-kit-elementor' ),
+				'separator'   => 'before',
+				'dynamic'     => [
+					'active' => true,
+				],
+				'condition'   => [
+					'wpkit_elementor_header_search_display' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_heading_head',
+			[
+				'type'       => Controls_Manager::HEADING,
+				'separator'  => 'before',
+				'label'      => esc_html__( 'Heading', 'wp-kit-elementor' ),
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_heading_text',
+			[
+				'type'        => Controls_Manager::TEXTAREA,
+				'label'       => esc_html__( 'Heading', 'wp-kit-elementor' ),
+				'label_block' => true,
+				'default'     => esc_attr__( 'What are you looking for?', 'wp-kit-elementor' ),
+				'dynamic'     => [
+					'active' => true,
+				],
+				'conditions'  => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_heading_color',
+			[
+				'label'      => esc_html__( 'Color', 'wp-kit-elementor' ),
+				'type'       => Controls_Manager::COLOR,
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+				'selectors'  => [
+					'.search-overlay .search-form__title' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'       => 'wpkit_elementor_header_search_full_screen_heading_typography',
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+				'selector'   => '.search-overlay .search-form__title',
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_button_head',
+			[
+				'type'       => Controls_Manager::HEADING,
+				'separator'  => 'before',
+				'label'      => esc_html__( 'Button', 'wp-kit-elementor' ),
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_submit_color',
+			[
+				'label'      => esc_html__( 'Color', 'wp-kit-elementor' ),
+				'type'       => Controls_Manager::COLOR,
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+				'selectors'  => [
+					'.search-overlay .search-form .search-submit' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_submit_size',
+			[
+				'type'       => Controls_Manager::SLIDER,
+				'label'      => esc_html__( 'Size', 'wp-kit-elementor' ),
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+				'selectors'  => [
+					'.search-overlay .search-form .search-field'  => '--e-wpkit-search-full-screen--field-height: {{SIZE}}{{UNIT}}; --e-wpkit-search-full-screen--field-pe: {{SIZE}}{{UNIT}};',
+					'.search-overlay .search-form .search-submit' => '--e-wpkit-search-full-screen--submit-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_overlay_head',
+			[
+				'type'       => Controls_Manager::HEADING,
+				'separator'  => 'before',
+				'label'      => esc_html__( 'Overlay', 'wp-kit-elementor' ),
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpkit_elementor_header_search_full_screen_container_width',
+			[
+				'type'       => Controls_Manager::SLIDER,
+				'label'      => esc_html__( 'Container Width', 'wp-kit-elementor' ),
+				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
+				'range'      => [
+					'px'  => [
+						'max' => 1600,
+					],
+					'em'  => [
+						'max' => 100,
+					],
+					'rem' => [
+						'max' => 100,
+					],
+				],
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+				'selectors'  => [
+					'.search-overlay .container' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name'       => 'wpkit_elementor_header_search_full_screen_overlay_background',
+				'types'      => [ 'classic', 'gradient' ],
+				'exclude'    => [ 'image' ],
+				'conditions' => [
+					'relation' => 'and',
+					'terms'    => [
+						[
+							'name'     => 'wpkit_elementor_header_search_display',
+							'operator' => '=',
+							'value'    => 'yes'
+						],
+						[
+							'name'     => 'wpkit_elementor_header_search_skin',
+							'operator' => '=',
+							'value'    => 'full_screen'
+						]
+					],
+				],
+				'selector'   => '.search-overlay',
 			]
 		);
 

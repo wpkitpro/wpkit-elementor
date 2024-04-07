@@ -22,8 +22,10 @@
 	}
 
 	.site-branding {
-		&.show-logo {
+		display: flex;
+		align-items: center;
 
+		&.show-logo {
 			.site-title {
 				display: none !important;
 			}
@@ -49,6 +51,14 @@
 			background-color: transparent;
 			text-decoration: none;
 		}
+	}
+
+	// Header Section
+	.header-section {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
 	}
 }
 
