@@ -81,8 +81,7 @@ $header_search_display = ( wp_kit_elementor_get_settings( 'wpkit_elementor_heade
 
 		<div class="header-section header-section-third">
 			<?php if ( 'full_screen' === $header_search_skin && $header_search_display ): ?>
-				<div
-					class="header-search-toggle-container <?php echo esc_attr( wp_kit_elementor_show_hide( 'wpkit_elementor_header_search_display' ) ); ?>">
+				<div class="header-search-toggle-container <?php echo esc_attr( wp_kit_elementor_show_hide( 'wpkit_elementor_header_search_display' ) ); ?>">
 					<div class="search-form__toggle" tabindex="0" aria-expanded="false" role="button">
 						<div class="font-icon-svg-container">
 							<i class="fa-solid fa-magnifying-glass"></i>
